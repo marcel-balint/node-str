@@ -44,8 +44,17 @@ const server = http.createServer((req, res) => {
         res.end(output);
       }
     );
-    //URL not found
-  } else {
+  }
+  // Images route
+  else if (/\.(jpg|jpeg|png|gif)$/i.test(pathName)) {
+    fs.readFile(`${__dirname}/data/img${pathName}`, (err, data) => {
+      res.writeHead(200, { "Content-type": "image/jpg" });
+      res.end(data);
+    });
+  }
+
+  //URL not found
+  else {
     res.writeHead(404, { "Content-type": "text/html" });
     res.end("Url not found");
   }
